@@ -37,10 +37,10 @@ c4 = Category("Vehicle",101,None)
 c1 = Category("Car",103, c4.category_name)
 c2 = Category("Bike", 104, c4.category_name)
 c3 = Category("Bicycle",106, c4.category_name)
-c4.dis_name()
-c3.dis_name()
-c2.dis_name()
-c1.dis_name()
+# c4.dis_name()
+# c3.dis_name()
+# c2.dis_name()
+# c1.dis_name()
 print("--------------------------------------")
 
 print("--------------------------------------")
@@ -116,7 +116,7 @@ my_list = [p1,p2,p3,p4,p5,p6,p7,p8,p9]
 for c in cat_list:
     p_list = []
     if c.code:
-        print("\n ",c.code,c.category_name,c.display_name)
+        #print("\n ",c.code,c.category_name,c.display_name)
         for i in my_list:  
             if c.category_name == i.category.category_name:  
                  print(i.name,i.code,i.price, end=" ")  
