@@ -1,5 +1,4 @@
-import sys
-
+import pprint
 # -------------------Category Class-----------------------------------
 class Category(object):
 
@@ -24,11 +23,19 @@ class Product(Category):
         self.stock_at_location= {}
     
     def disp(self):
+        print()
         print(self.name,self.code,self.category.category_name, self.price,self.stock_at_location)
-        #print(self.stock_at_location)
-        stock_at_locat = self.stock_at_location.values()
-        #print(stock_at_locat)
-        
+        print("------------------------------------------------------------------")
+
+        #-----------Exception Handling--------------Don't allow Negative value------------------------------------------
+        for product_quantity in self.stock_at_location.values():
+            try:
+                assert product_quantity > 0
+                    
+            except AssertionError:
+                print("Don't allow Negative value")
+                print()
+
 # ----------------------Location Class-------------------------------------------------
 class location(Product):
     def __init__(self,name,code):
@@ -49,8 +56,12 @@ class movement(location):
 
     @staticmethod
     def movements_by_product(product):
-        return product
+       for movement_product in move_list:
+            if movement_product.product.name == product:
+                print("From location :- ",movement_product.from_location,"\nTo location :-",movement_product.to_location,"\nQuantity :-",movement_product.quantity)
+                print()
 
+        
     def show(self):
         print("From Location : ",self.from_location,"To_Location : ",self.to_location,"Product  :",self.product,"Quantity :",self.quantity)    
 
@@ -86,71 +97,63 @@ m6=movement("Rajkot","Baroda",p5,6)
 m7=movement("Rajkot","Junagadh",p2,1)
 
 
-# c1.show()
-# c2.show()
-# c3.show()
-# c4.show()
-
-
 
 p_list = [p1,p2,p3,p4,p5]
 cat_list = [c1,c2,c3,c4]   
-l_list = (l1,l2,l3,l4)
-move_list = [m1,m2,m3,m4,m5,m6,m7]           
+l_list = [l1,l2,l3,l4]
+move_list = [m1,m2,m3,m4,m5,m6,m7]  
 
-#--------------Append data in Product class--------Location as a key ------Stock at location in Product Category------------------------------
+# --------------Static method call Movement by product-----------Direct access class
+movement.movements_by_product("Milk")
 
-# for p in p_list:
-#     add_quant = 0
-#     my_dict = {}
+#----------------Display product list by location   (Group by location)-----------------------------------
+
+for location_name in l_list:
+    if location_name.name:
+        print("---------------------------------------------")
+        print(location_name.name)
+        print("---------------------------------------------")
+        for movement_location in move_list:
+            for product_item in p_list:
+                if location_name.name == movement_location.to_location:
+                    if movement_location.product.name == product_item.name:
+                        print(product_item.name,product_item.code,product_item.category.category_name,product_item.price)  
+                        print()      
+
+
+#--------------------Movement Class-----------------Check location and Product-------------------------------------
+# stock_movement_list = []
+
+# for movement_info in move_list:
     
-#     if p.name:
-#         #print(p.name)
-#         for m in move_list:
-            
-#             if p.name == m.product.name:
-#                 add_quant += m.quantity
-#                 my_dict.update({m.to_location:add_quant})
-#                 #print(my_dict)
-#                 p.stock_at_location = my_dict
-#                 #print(p.stock_at_location)
-
-# #--------------------Exception Handle negative value--------------------------
-
-#                 stock_at_locat = p.stock_at_location.values()
-#                 #print(stock_at_locat)
-                
-#                 for stock in stock_at_locat:
-                    
-#                     try:
-#                         if stock > 0:
-#                             raise ValueError
-#                     except:
-#                         print("Don't allow Negative Value")
-
-#----------------Display product list by location   (gfroup by location)-----------------------------------
-
-for l in l_list:
-    for m in move_list:
-        if l.name:
-            print(l.name)
-            break
-        
-            
-        
-# for p in p_list:
-#     new_dict = {}
+#     update = False
     
-#     if p.name:
-#         #print(p.name)
-#         for m in move_list:
-#             print()
-#             if p.name == m.product.name:
-#                 new_dict.update({"Location name":m.to_location,"Product name":m.product.name})
-#                 print(new_dict)
+#     for stock_movement_info in stock_movement_list:
+#         #print(stock_movement_info['to_location'],stock_movement_info['quantity'])
+#         if movement_info.product.name == stock_movement_info['product'] and movement_info.from_location == stock_movement_info['from_location'] and movement_info.to_location == stock_movement_info['to_location']:
+#             stock_movement_info['quantity'] += movement_info.quantity
+#             #print(stock_movement_info['to_location'],stock_movement_info['quantity'])
 
-# p1.disp()
-# p2.disp()
-# p3.disp()
-# p4.disp()
-# p5.disp()
+# #--------------Append data in Product class--------Location as a key : Quantity as a value ------Stock at location in Product Category------------------------------
+            
+#             movement_info.product.stock_at_location = ({stock_movement_info['to_location']:stock_movement_info['quantity']})
+#             update = True
+
+          
+#     if not update:
+#         stock_movement_list.append({'product': movement_info.product.name,'from_location' : movement_info.from_location,'to_location': movement_info.to_location, 'quantity': movement_info.quantity})
+#         movement_info.product.stock_at_location = ({movement_info.to_location:movement_info.quantity})
+#     #pprint.pprint(stock_movement_list)
+
+# print("\n")
+# print("************************************************************************************")
+# pprint.pprint(stock_movement_list)
+# print("************************************************************************************")
+# print("\n")
+
+
+p1.disp()
+p2.disp()
+p3.disp()
+p4.disp()
+p5.disp()
